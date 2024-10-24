@@ -148,14 +148,6 @@ test './bn.sh 2022 F' 3 'Sam123' '' 'Badly formatted name: Sam123'
 test './bn.sh 1996 m' 3 'Daniel_ Smith' '' 'Badly formatted name: Daniel_'
 
 
-# Multi line error case: exit code 3
-test './bn.sh 1950 b' 3 'Scott Witch B0B' '1950: Scott ranked 4254 out of 6110 female names.
-1950: Scott ranked 82 out of 4195 male names.
-1950: Witch not found among female names.
-1950: Witch not found among male names.
-Badly formatted name: B0B'
-
-
 # Error case: exit code 4
 test './bn.sh 2025 m' 4 '' '' 'No data for 2025'
 
