@@ -11,15 +11,77 @@ help() {
     #Output utility name, version, and purpose of utility
     echo "bn utility v1.0.0"
     echo "The bn utility is designed to allow users to search for baby name rankings in the United States based on gender and year from 1880-2022."
-    echo 
     #Output how to correctly use the command and what the required arguments are
     echo "Usage: bn <year> <assigned gender: f|F|m|M|b|B>"
     echo "Arguments:"
     echo "  <year>            The year to search (between 1880 and 2022)"
     echo "  <assigned gender> The gender of the name. Can either be: (f/F for Female) or (m/M for Male) or (b/B for Both Genders)"
-    echo
 
 }
+
+
+#Function to check if the data file for the specific year exists
+year_file_exists() { 
+
+    #Set file variable to the path of the baby names file for the given year
+    file="us_baby_names/yob$1.txt"
+
+    #Using the -f flag, check if the file doesn't exist 
+    if [[ ! -f $file ]]; then
+    
+        #If the file does not exist, print an error message to stderr and exit 4
+        echo "No data for $1" >&2
+        exit 4
+
+    fi
+}
+
+
+#If user enters the --help flag in first argument
+if [[ $1 == "--help" ]]; then
+    
+    #Call the help function
+    help
+
+    #Exit script successfully with exit 0
+    exit 0
+fi
+
+#If user does not provide exactly two arguments
+if [[ $# != 2 ]]; then
+    
+    #Print error message indicating they entered the wrong number of arguments
+    echo "Wrong number of command line arguments" >&2
+    echo "Usage: bn <year> <assigned gender: f|F|m|M|b|B>" >&2
+
+    #Indicate invalid arguments with exit 1
+    exit 1
+fi
+
+#Verify that the year format is exactly 4 digits
+if [[ ! $1 =~ ^[0-9]{4}$ ]]; then
+    
+    #If the first argument is not a valid 4-digit year, output an error message to stderr
+    echo "Badly formatted year: $1" >&2
+    echo "Usage: bn <year> <assigned gender: f|F|m|M|b|B>" >&2
+    
+    #Indicate invalid year format with exit 2
+    exit 2
+fi
+
+#Verify that the gender format is either f, F, m, M, b, or B
+if [[ ! $2 =~ ^[fFmMbB]$ ]]; then
+
+    #If the second argument is not one of the allowed gender values, output an error message to stderr
+    echo "Badly formatted assigned gender: $2" >&2
+    echo "Usage: bn <year> <assigned gender: f|F|m|M|b|B>" >&2
+    
+    #Indicate invalid gender format with exit 2
+    exit 2
+fi
+
+#Check if the data file for the year exists
+year_file_exists "$1"
 
 #Rank function to retrieve and display the rank of baby names based on the year and gender given by the user
 #First argument ($1) = year, second argument ($2) = gender, third argument ($3) = name
@@ -77,68 +139,6 @@ rank() {
         fi
     fi
 }
-
-#Function to check if the data file for the specific year exists
-year_file_exists() { 
-
-    #Set file variable to the path of the baby names file for the given year
-    file="us_baby_names/yob$1.txt"
-
-    #Using the -f flag, check if the file doesn't exist 
-    if [[ ! -f $file ]]; then
-    
-        #If the file does not exist, print an error message to stderr and exit 4
-        echo "No data for $1" >&2
-        exit 4
-
-    fi
-}
-
-#Check if the data file for the year exists
-year_file_exists "$1"
-
-#If user enters the --help flag in first argument
-if [[ $1 == "--help" ]]; then
-    
-    #Call the help function
-    help
-
-    #Exit script successfully with exit 0
-    exit 0
-fi
-
-#If user does not provide exactly two arguments
-if [[ $# != 2 ]]; then
-    
-    #Print error message indicating they entered the wrong number of arguments
-    echo "Wrong number of command line arguments" >&2
-    echo "bn <year> <assigned gender: f|F|m|M|b|B>" >&2
-
-    #Indicate invalid arguments with exit 1
-    exit 1
-fi
-
-#Verify that the year format is exactly 4 digits
-if [[ ! $1 =~ ^[0-9]{4}$ ]]; then
-    
-    #If the first argument is not a valid 4-digit year, output an error message to stderr
-    echo "Badly formatted year: $1" >&2
-    echo "bn <year> <assigned gender: f|F|m|M|b|B>" >&2
-    
-    #Indicate invalid year format with exit 2
-    exit 2
-fi
-
-#Verify that the gender format is either f, F, m, M, b, or B
-if [[ ! $2 =~ ^[fFmMbB]$ ]]; then
-
-    #If the second argument is not one of the allowed gender values, output an error message to stderr
-    echo "Badly formatted gender: $2" >&2
-    echo "bn <year> <assigned gender: f|F|m|M|b|B>" >&2
-    
-    #Indicate invalid gender format with exit 2
-    exit 2
-fi
 
 
 #Read names from stdin one at a time
