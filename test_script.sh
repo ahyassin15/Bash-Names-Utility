@@ -85,7 +85,7 @@ test() {
 ##########################################
 
 # --help flag success
-test './bn --help' 0 '' 'bn utility v1.0.0
+test './bn.sh --help' 0 '' 'bn utility v1.0.0
 The bn utility is designed to allow users to search for baby name rankings in the United States based on gender and year from 1880-2022.
 Usage: bn <year> <assigned gender: f|F|m|M|b|B>
 Arguments:
@@ -94,20 +94,20 @@ Arguments:
 
 
 # Simple success (m)
-test './bn 2022 m' 0 'Sam' '2022: Sam ranked 658 out of 14255 male names.' ''
+test './bn.sh 2022 m' 0 'Sam' '2022: Sam ranked 658 out of 14255 male names.' ''
 
 
 # Simple success (F)
-test './bn 2003 F' 0 'Emily' '2003: Emily ranked 1 out of 18435 female names.' ''
+test './bn.sh 2003 F' 0 'Emily' '2003: Emily ranked 1 out of 18435 female names.' ''
 
 
 # Multi line success (B)
-test './bn 2022 B' 0 'Sam' '2022: Sam ranked 658 out of 14255 male names.
+test './bn.sh 2022 B' 0 'Sam' '2022: Sam ranked 658 out of 14255 male names.
 2022: Sam ranked 6628 out of 17660 female names.' ''
 
 
 # Multi line success (b)
-test './bn 1980 b' 0 'ellie SEBASTIAN JoSePh' '1980: ellie ranked 1554 out of 12163 female names.
+test './bn.sh 1980 b' 0 'ellie SEBASTIAN JoSePh' '1980: ellie ranked 1554 out of 12163 female names.
 1980: ellie not found among male names.
 1980: SEBASTIAN ranked 11771 out of 12163 female names.
 1980: SEBASTIAN ranked 671 out of 7294 male names.
@@ -116,40 +116,40 @@ test './bn 1980 b' 0 'ellie SEBASTIAN JoSePh' '1980: ellie ranked 1554 out of 12
 
 
 # Error case: exit code 1
-test './bn 1980' 1 '' '' 'Wrong number of command line arguments
+test './bn.sh 1980' 1 '' '' 'Wrong number of command line arguments
 Usage: bn <year> <assigned gender: f|F|m|M|b|B>'
 
 
 # Error case: exit code 1
-test './bn 1961 M Bob WILLIAM' 1 '' '' 'Wrong number of command line arguments
+test './bn.sh 1961 M Bob WILLIAM' 1 '' '' 'Wrong number of command line arguments
 Usage: bn <year> <assigned gender: f|F|m|M|b|B>'
 
 
 # Multi line error case: exit code 2
-test './bn twenty-twenty b' 2 '' '' ' "Badly formatted year: twenty-twenty
+test './bn.sh twenty-twenty b' 2 '' '' ' "Badly formatted year: twenty-twenty
 Usage: <year> <assigned gender: f|F|m|M|b|B>'
 
 
 # Multi line error case: exit code 2
-test './bn 1111 X' 2 '' '' 'Badly formatted assigned gender: X
+test './bn.sh 1111 X' 2 '' '' 'Badly formatted assigned gender: X
 Usage: bn <year> <assigned gender: f|F|m|M|b|B>'
 
 
 # Multi line error case: exit code 2
-test './bn 1922 Female' 2 '' '' 'Badly formatted assigned gender: Female
+test './bn.sh 1922 Female' 2 '' '' 'Badly formatted assigned gender: Female
 Usage: bn <year> <assigned gender: f|F|m|M|b|B>'
 
 
 # Error case: exit code 3
-test './bn 2022 F' 3 'Sam123' '' 'Badly formatted name: Sam123'
+test './bn.sh 2022 F' 3 'Sam123' '' 'Badly formatted name: Sam123'
 
 
 # Error case: exit code 3
-test './bn 1996 m' 3 'Daniel_ Smith' '' 'Badly formatted name: Daniel_'
+test './bn.sh 1996 m' 3 'Daniel_ Smith' '' 'Badly formatted name: Daniel_'
 
 
 # Multi line error case: exit code 3
-test './bn 1950 b' 3 'Scott Witch B0B' '1950: Scott ranked 4254 out of 6110 female names.
+test './bn.sh 1950 b' 3 'Scott Witch B0B' '1950: Scott ranked 4254 out of 6110 female names.
 1950: Scott ranked 82 out of 4195 male names.
 1950: Witch not found among female names.
 1950: Witch not found among male names.
@@ -157,7 +157,7 @@ Badly formatted name: B0B'
 
 
 # Error case: exit code 4
-test './bn 2025 m' 4 '' '' 'No data for 2025'
+test './bn.sh 2025 m' 4 '' '' 'No data for 2025'
 
 
 # return code
