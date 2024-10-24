@@ -11,6 +11,7 @@ help() {
     #Output utility name, version, and purpose of utility
     echo "bn utility v1.0.0"
     echo "The bn utility is designed to allow users to search for baby name rankings in the United States based on gender and year from 1880-2022."
+    
     #Output how to correctly use the command and what the required arguments are
     echo "Usage: bn <year> <assigned gender: f|F|m|M|b|B>"
     echo "Arguments:"
@@ -18,7 +19,6 @@ help() {
     echo "  <assigned gender> The gender of the name. Can either be: (f/F for Female) or (m/M for Male) or (b/B for Both Genders)"
 
 }
-
 
 #Function to check if the data file for the specific year exists
 year_file_exists() { 
@@ -35,7 +35,6 @@ year_file_exists() {
 
     fi
 }
-
 
 #If user enters the --help flag in first argument
 if [[ $1 == "--help" ]]; then
@@ -139,7 +138,6 @@ rank() {
         fi
     fi
 }
-
 
 #Read names from stdin one at a time
 while read line; do
