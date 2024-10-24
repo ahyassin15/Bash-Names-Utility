@@ -90,7 +90,7 @@ The bn utility is designed to allow users to search for baby name rankings in th
 Usage: bn <year> <assigned gender: f|F|m|M|b|B>
 Arguments:
   <year>            The year to search (between 1880 and 2022)
-  <assigned gender> The gender of the name. Can either be: (f/F for Female) or (m/M for Male) or (b/B for Both Genders)'
+  <assigned gender> The gender of the name. Can either be: (f/F for Female) or (m/M for Male) or (b/B for Both Genders)' ''
 
 
 # Simple success (m)
@@ -102,8 +102,8 @@ test './bn.sh 2003 F' 0 'Emily' '2003: Emily ranked 1 out of 18435 female names.
 
 
 # Multi line success (B)
-test './bn.sh 2022 B' 0 'Sam' '2022: Sam ranked 658 out of 14255 male names.
-2022: Sam ranked 6628 out of 17660 female names.' ''
+test './bn.sh 2022 B' 0 'Sam' '2022: Sam ranked 6628 out of 17660 female names.
+2022: Sam ranked 658 out of 14255 male names.' ''
 
 
 # Multi line success (b)
@@ -126,8 +126,8 @@ Usage: bn <year> <assigned gender: f|F|m|M|b|B>'
 
 
 # Multi line error case: exit code 2
-test './bn.sh twenty-twenty b' 2 '' '' ' "Badly formatted year: twenty-twenty
-Usage: <year> <assigned gender: f|F|m|M|b|B>'
+test './bn.sh twenty-twenty b' 2 '' '' 'Badly formatted year: twenty-twenty
+Usage: bn <year> <assigned gender: f|F|m|M|b|B>'
 
 
 # Multi line error case: exit code 2
